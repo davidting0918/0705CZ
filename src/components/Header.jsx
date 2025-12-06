@@ -1,12 +1,13 @@
+import { Link } from 'react-router-dom';
 import './Header.css';
 
 const Header = () => {
   return (
     <header className="header">
       <div className="header-container">
-        <div className="logo">
-          <h1>ELEGANCE</h1>
-        </div>
+        <Link to="/" className="logo">
+          <h1>0705CZ</h1>
+        </Link>
 
         <nav className="nav-menu">
           <button className="nav-btn">商店</button>
@@ -22,12 +23,12 @@ const Header = () => {
             </svg>
           </button>
 
-          <button className="icon-btn" aria-label="會員帳號">
+          <Link to="/login" className="icon-btn" aria-label="會員帳號">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
               <circle cx="12" cy="7" r="4"></circle>
             </svg>
-          </button>
+          </Link>
 
           <button className="icon-btn cart-btn" aria-label="購物車">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
