@@ -9,27 +9,27 @@ const Header = () => {
         </div>
 
         <nav className="nav-menu">
-          <button className="nav-btn">Shop</button>
-          <button className="nav-btn">About</button>
-          <button className="nav-btn">Contact</button>
+          <button className="nav-btn">商店</button>
+          <button className="nav-btn">關於</button>
+          <button className="nav-btn">聯絡我們</button>
         </nav>
 
         <div className="header-actions">
-          <button className="icon-btn" aria-label="Search">
+          <button className="icon-btn" aria-label="搜尋">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <circle cx="11" cy="11" r="8"></circle>
               <path d="m21 21-4.35-4.35"></path>
             </svg>
           </button>
 
-          <button className="icon-btn" aria-label="User Account">
+          <button className="icon-btn" aria-label="會員帳號">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
               <circle cx="12" cy="7" r="4"></circle>
             </svg>
           </button>
 
-          <button className="icon-btn cart-btn" aria-label="Shopping Cart">
+          <button className="icon-btn cart-btn" aria-label="購物車">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <circle cx="9" cy="21" r="1"></circle>
               <circle cx="20" cy="21" r="1"></circle>
