@@ -3,6 +3,7 @@ import Header from './components/Header';
 import HeroCarousel from './components/HeroCarousel';
 import ProductGrid from './components/ProductGrid';
 import Login from './components/Login';
+import Checkout from './components/Checkout';
 import { carouselImages, products } from './data/demoData';
 import './App.css';
 
@@ -23,6 +24,7 @@ function App() {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/checkout" element={<Checkout />} />
     </Routes>
   );
 }
