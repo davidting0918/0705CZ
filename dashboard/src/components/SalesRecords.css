@@ -1,0 +1,36 @@
+.sales-records {
+  max-width: 1400px;
+}
+
+.amount-cell {
+  color: var(--accent-success);
+  font-weight: 600;
+}
+
+.sale-summary {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-color);
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.summary-row.total {
+  padding-top: 12px;
+  margin-top: 8px;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-primary);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.summary-row.total span:last-child {
+  color: var(--accent-success);
+}
+
