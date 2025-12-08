@@ -39,3 +39,38 @@ export interface CartContextValue {
   closeCart: () => void;
 }
 
+// Delivery method type
+export type DeliveryMethod = 'home' | 'convenience_store';
+
+// Convenience store chain type
+export type ConvenienceStoreChain = 'FAMI' | 'UNIMART';
+
+// Store selection interface
+export interface StoreSelection {
+  CVSStoreID: string;
+  CVSStoreName: string;
+  CVSAddress: string;
+  CVSTelephone?: string;
+  CVSOpenTime?: string;
+  LogisticsSubType: ConvenienceStoreChain;
+}
+
+// ECPay global type declaration
+declare global {
+  interface Window {
+    ECPay?: {
+      Logistics: {
+        Map: (config: {
+          MerchantID: string;
+          LogisticsType: string;
+          LogisticsSubType: string;
+          IsCollection: string;
+          ServerReplyURL: string;
+          ExtraData?: string;
+          Device?: number;
+        }) => void;
+      };
+    };
+  }
+}
+

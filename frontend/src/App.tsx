@@ -3,6 +3,7 @@ import Header from './components/Header';
 import HeroCarousel from './components/HeroCarousel';
 import ProductGrid from './components/ProductGrid';
 import Checkout from './components/Checkout';
+import ECPayCallback from './components/ECPayCallback';
 import { carouselImages, products } from './data/demoData';
 
 function HomePage() {
@@ -22,6 +23,7 @@ function App() {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/checkout" element={<Checkout />} />
+      <Route path="/ecpay-callback" element={<ECPayCallback />} />
     </Routes>
   );
 }
