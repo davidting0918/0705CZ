@@ -1,8 +1,9 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, type ReactNode } from 'react';
+import type { CartContextValue, CartItem, Product } from '../types';
 
-const CartContext = createContext();
+const CartContext = createContext<CartContextValue | undefined>(undefined);
 
-export const useCart = () => {
+export const useCart = (): CartContextValue => {
   const context = useContext(CartContext);
   if (!context) {
     throw new Error('useCart must be used within a CartProvider');
@@ -10,11 +11,15 @@ export const useCart = () => {
   return context;
 };
 
-export const CartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState([]);
+interface CartProviderProps {
+  children: ReactNode;
+}
+
+export const CartProvider = ({ children }: CartProviderProps) => {
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  const addToCart = (product) => {
+  const addToCart = (product: Product) => {
     setCartItems((prevItems) => {
       const existingItem = prevItems.find((item) => item.id === product.id);
       if (existingItem) {
@@ -28,11 +33,11 @@ export const CartProvider = ({ children }) => {
     });
   };
 
-  const removeFromCart = (productId) => {
+  const removeFromCart = (productId: number) => {
     setCartItems((prevItems) => prevItems.filter((item) => item.id !== productId));
   };
 
-  const updateQuantity = (productId, quantity) => {
+  const updateQuantity = (productId: number, quantity: number) => {
     if (quantity <= 0) {
       removeFromCart(productId);
       return;
@@ -48,18 +53,18 @@ export const CartProvider = ({ children }) => {
     setCartItems([]);
   };
 
-  const getCartTotal = () => {
+  const getCartTotal = (): number => {
     return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
-  const getCartCount = () => {
+  const getCartCount = (): number => {
     return cartItems.reduce((count, item) => count + item.quantity, 0);
   };
 
   const openCart = () => setIsCartOpen(true);
   const closeCart = () => setIsCartOpen(false);
 
-  const value = {
+  const value: CartContextValue = {
     cartItems,
     isCartOpen,
     addToCart,

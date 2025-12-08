@@ -1,5 +1,7 @@
+import type { CarouselImage, Product } from '../types';
+
 // Demo carousel images
-export const carouselImages = [
+export const carouselImages: CarouselImage[] = [
   {
     id: 1,
     url: 'https://images.unsplash.com/photo-1472476443507-c7a5948772fc',
@@ -18,7 +20,7 @@ export const carouselImages = [
 ];
 
 // Demo products
-export const products = [
+export const products: Product[] = [
   {
     id: 1,
     name: '香辣辣椒醬',

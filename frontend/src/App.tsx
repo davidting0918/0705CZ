@@ -4,13 +4,12 @@ import HeroCarousel from './components/HeroCarousel';
 import ProductGrid from './components/ProductGrid';
 import Checkout from './components/Checkout';
 import { carouselImages, products } from './data/demoData';
-import './App.css';
 
 function HomePage() {
   return (
-    <div className="app">
+    <div className="min-h-screen bg-white">
       <Header />
-      <main>
+      <main className="w-full">
         <HeroCarousel images={carouselImages} />
         <ProductGrid products={products} />
       </main>
