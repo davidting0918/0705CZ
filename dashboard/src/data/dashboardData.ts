@@ -1,5 +1,8 @@
+import type { Product, Order, OrderItem, StockHistory, StockStatus, StockChangeType, Customer, DashboardStats, OrderStatus, Admin } from '../types';
+import { stockChangeTypes } from '../types';
+
 // Products data (synced from frontend demoData.js)
-export const products = [
+export const products: Product[] = [
   {
     id: 1,
     name: '香辣辣椒醬',
@@ -56,20 +59,11 @@ export const products = [
   }
 ];
 
-// Stock change types
-export const stockChangeTypes = {
-  increase: '進貨',
-  decrease: '出貨',
-  adjustment: '調整',
-  return: '退貨',
-  damage: '損耗'
-};
-
 // Generate stock history
-const generateStockHistory = () => {
-  const history = [];
+const generateStockHistory = (): StockHistory[] => {
+  const history: StockHistory[] = [];
   const operators = ['管理員', '店長', '倉管人員'];
-  const reasons = {
+  const reasons: Record<StockChangeType, string[]> = {
     increase: ['供應商進貨', '補貨', '調撥入庫'],
     decrease: ['訂單出貨', '調撥出庫', '促銷活動'],
     adjustment: ['盤點調整', '系統校正', '數量修正'],
@@ -77,7 +71,7 @@ const generateStockHistory = () => {
     damage: ['商品過期', '包裝破損', '運送損壞']
   };
 
-  const getRandomDate = (daysAgo) => {
+  const getRandomDate = (daysAgo: number): string => {
     const date = new Date();
     date.setDate(date.getDate() - Math.floor(Math.random() * daysAgo));
     date.setHours(Math.floor(Math.random() * 12) + 8, Math.floor(Math.random() * 60));
@@ -86,16 +80,15 @@ const generateStockHistory = () => {
 
   for (let i = 1; i <= 40; i++) {
     const product = products[Math.floor(Math.random() * products.length)];
-    const changeTypes = Object.keys(stockChangeTypes);
-    const typeWeights = { increase: 35, decrease: 30, adjustment: 20, return: 10, damage: 5 };
+    const typeWeights: Record<StockChangeType, number> = { increase: 35, decrease: 30, adjustment: 20, return: 10, damage: 5 };
     
-    let type = 'increase';
+    let type: StockChangeType = 'increase';
     const total = Object.values(typeWeights).reduce((a, b) => a + b, 0);
     let random = Math.random() * total;
     for (const [t, weight] of Object.entries(typeWeights)) {
       random -= weight;
       if (random <= 0) {
-        type = t;
+        type = t as StockChangeType;
         break;
       }
     }
@@ -123,32 +116,20 @@ const generateStockHistory = () => {
     });
   }
 
-  return history.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  return history.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 };
 
-export const stockHistory = generateStockHistory();
+export const stockHistory: StockHistory[] = generateStockHistory();
 
 // Stock status helpers
-export const getStockStatus = (stock, threshold) => {
+export const getStockStatus = (stock: number, threshold: number): StockStatus => {
   if (stock === 0) return 'out_of_stock';
   if (stock <= threshold) return 'low_stock';
   return 'in_stock';
 };
 
-export const stockStatusLabels = {
-  in_stock: '庫存充足',
-  low_stock: '庫存不足',
-  out_of_stock: '已售完'
-};
-
-export const stockStatusColors = {
-  in_stock: '#00ba7c',
-  low_stock: '#ffad1f',
-  out_of_stock: '#f4212e'
-};
-
 // Customer data
-export const customers = [
+export const customers: Customer[] = [
   { id: 1, name: '王小明', email: 'wang.xiaoming@email.com', phone: '0912-345-678', address: '台北市信義區信義路五段7號', totalOrders: 12, totalSpent: 5680, joinDate: '2024-03-15', status: 'active' },
   { id: 2, name: '李美玲', email: 'li.meiling@email.com', phone: '0923-456-789', address: '新北市板橋區文化路一段100號', totalOrders: 8, totalSpent: 3240, joinDate: '2024-04-22', status: 'active' },
   { id: 3, name: '張志豪', email: 'zhang.zhihao@email.com', phone: '0934-567-890', address: '台中市西屯區台灣大道三段99號', totalOrders: 15, totalSpent: 7890, joinDate: '2024-02-10', status: 'vip' },
@@ -171,25 +152,22 @@ export const customers = [
   { id: 20, name: '洪偉誠', email: 'hong.weicheng@email.com', phone: '0951-234-567', address: '台東縣台東市中山路276號', totalOrders: 22, totalSpent: 11200, joinDate: '2023-12-15', status: 'vip' }
 ];
 
-// Order statuses
-export const orderStatuses = ['pending', 'processing', 'shipped', 'delivered', 'cancelled'];
-
 // Generate orders with realistic data
-const generateOrders = () => {
-  const orders = [];
-  const statusWeights = { pending: 15, processing: 20, shipped: 25, delivered: 35, cancelled: 5 };
+const generateOrders = (): Order[] => {
+  const orders: Order[] = [];
+  const statusWeights: Record<OrderStatus, number> = { pending: 15, processing: 20, shipped: 25, delivered: 35, cancelled: 5 };
   
-  const getRandomStatus = () => {
+  const getRandomStatus = (): OrderStatus => {
     const total = Object.values(statusWeights).reduce((a, b) => a + b, 0);
     let random = Math.random() * total;
     for (const [status, weight] of Object.entries(statusWeights)) {
       random -= weight;
-      if (random <= 0) return status;
+      if (random <= 0) return status as OrderStatus;
     }
     return 'delivered';
   };
 
-  const getRandomDate = (daysAgo) => {
+  const getRandomDate = (daysAgo: number): string => {
     const date = new Date();
     date.setDate(date.getDate() - Math.floor(Math.random() * daysAgo));
     date.setHours(Math.floor(Math.random() * 24), Math.floor(Math.random() * 60));
@@ -199,11 +177,11 @@ const generateOrders = () => {
   for (let i = 1; i <= 55; i++) {
     const customer = customers[Math.floor(Math.random() * customers.length)];
     const numItems = Math.floor(Math.random() * 4) + 1;
-    const orderItems = [];
-    const usedProducts = new Set();
+    const orderItems: OrderItem[] = [];
+    const usedProducts = new Set<number>();
 
     for (let j = 0; j < numItems; j++) {
-      let product;
+      let product: Product;
       do {
         product = products[Math.floor(Math.random() * products.length)];
       } while (usedProducts.has(product.id) && usedProducts.size < products.length);
@@ -243,10 +221,10 @@ const generateOrders = () => {
     });
   }
 
-  return orders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  return orders.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 };
 
-export const orders = generateOrders();
+export const orders: Order[] = generateOrders();
 
 // Generate sales records from delivered orders
 export const salesRecords = orders
@@ -265,7 +243,7 @@ export const salesRecords = orders
   }));
 
 // Dashboard statistics
-export const getDashboardStats = () => {
+export const getDashboardStats = (): DashboardStats => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   
@@ -294,32 +272,10 @@ export const getDashboardStats = () => {
   };
 };
 
-// Status display helpers
-export const statusLabels = {
-  pending: '待處理',
-  processing: '處理中',
-  shipped: '已出貨',
-  delivered: '已送達',
-  cancelled: '已取消'
+// Current logged-in admin/staff data
+export const currentAdmin: Admin = {
+  id: 1,
+  name: '管理員',
+  role: 'Store Manager',
+  photo: undefined // Will use placeholder avatar
 };
-
-export const statusColors = {
-  pending: '#ffad1f',
-  processing: '#1d9bf0',
-  shipped: '#7856ff',
-  delivered: '#00ba7c',
-  cancelled: '#f4212e'
-};
-
-export const customerStatusLabels = {
-  new: '新客戶',
-  active: '活躍',
-  vip: 'VIP'
-};
-
-export const customerStatusColors = {
-  new: '#1d9bf0',
-  active: '#00ba7c',
-  vip: '#7856ff'
-};
-
