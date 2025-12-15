@@ -1,12 +1,20 @@
-// Product type definition
+// Product type definition (matches API response)
 export interface Product {
-  id: number;
+  product_id: string;
   name: string;
+  description?: string;
   price: number;
   sku: string;
+  category?: string;
   stock: number;
-  lowStockThreshold: number;
-  category: string;
+  low_stock_threshold?: number;
+  image_url?: string;
+  is_active?: boolean;
+  created_at?: string;
+  updated_at?: string;
+  // Legacy fields for backward compatibility
+  id?: number;
+  lowStockThreshold?: number;
 }
 
 // Stock status type
@@ -125,6 +133,20 @@ export const stockChangeTypes: Record<StockChangeType, string> = {
   return: '退貨',
   damage: '損耗',
 };
+
+// Product filter and sort types
+export type ProductSortField = 'name' | 'price' | 'stock' | 'created_at';
+export type SortOrder = 'asc' | 'desc';
+
+export interface ProductFilterState {
+  search: string;
+  category: string;
+  stockStatus: StockStatus | 'all';
+  sortBy: ProductSortField;
+  sortOrder: SortOrder;
+  page: number;
+  limit: number;
+}
 
 // Admin/Staff interface
 export interface Admin {
