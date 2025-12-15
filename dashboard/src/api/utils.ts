@@ -2,7 +2,7 @@ import type { ApiErrorResponse, AdminUser } from './types';
 
 // Environment utilities
 export const getAppEnv = (): string => {
-  return import.meta.env.APP_ENV || import.meta.env.VITE_ENV || 'development';
+  return import.meta.env.VITE_APP_ENV || 'development';
 };
 
 // Token storage utilities

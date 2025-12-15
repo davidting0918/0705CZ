@@ -2,23 +2,23 @@ import { tokenUtils, handleApiError } from './utils';
 
 /**
  * Get the API base URL based on the current environment
- * Environment priority: APP_ENV > VITE_ENV > default to 'development'
+ * Reads VITE_APP_ENV from .env file (e.g., VITE_APP_ENV=staging)
  */
 export const getApiBaseUrl = (): string => {
-  const appEnv = import.meta.env.APP_ENV ?? 'development';
+  const appEnv = import.meta.env.VITE_APP_ENV || 'development';
   
   switch (appEnv.toLowerCase()) {
     case 'production':
     case 'prod':
-      return import.meta.env.VITE_API_PROD_BASE_URL ?? '';
+      return import.meta.env.VITE_API_PROD_BASE_URL || import.meta.env.VITE_API_BASE_URL;
     
     case 'staging':
-      return import.meta.env.VITE_API_STAGING_BASE_URL ?? '';
+      return import.meta.env.VITE_API_STAGING_BASE_URL || import.meta.env.VITE_API_BASE_URL;
     
     case 'development':
     case 'dev':
     default:
-      return import.meta.env.VITE_API_BASE_URL ?? '';
+      return import.meta.env.VITE_API_BASE_URL;
   }
 };
 
