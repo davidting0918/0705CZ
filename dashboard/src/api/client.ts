@@ -5,20 +5,20 @@ import { tokenUtils, handleApiError } from './utils';
  * Environment priority: APP_ENV > VITE_ENV > default to 'development'
  */
 export const getApiBaseUrl = (): string => {
-  const appEnv = import.meta.env.APP_ENV || import.meta.env.VITE_ENV || 'development';
+  const appEnv = import.meta.env.APP_ENV ?? 'development';
   
   switch (appEnv.toLowerCase()) {
     case 'production':
     case 'prod':
-      return import.meta.env.VITE_API_PROD_BASE_URL || import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+      return import.meta.env.VITE_API_PROD_BASE_URL ?? '';
     
     case 'staging':
-      return import.meta.env.VITE_API_STAGING_BASE_URL || import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+      return import.meta.env.VITE_API_STAGING_BASE_URL ?? '';
     
     case 'development':
     case 'dev':
     default:
-      return import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+      return import.meta.env.VITE_API_BASE_URL ?? '';
   }
 };
 
